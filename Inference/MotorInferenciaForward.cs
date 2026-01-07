@@ -1,11 +1,18 @@
 using SE_NEM.domain.hechos;
 using SE_NEM.domain.reglas;
+using SE_NEM.Explanation;
 
 namespace SE_NEM.Inference;
 
 public sealed class MotorInferenciaForward : IMotorInferencia
 {
     private const int MaxIteraciones = 100;
+    private readonly IExplicador _explicador;
+    
+    public MotorInferenciaForward(IExplicador? explicador = null)
+    {
+        _explicador = explicador;
+    }
 
     public void Ejecutar(IBaseHechos hechos, IEnumerable<IRegla> reglas)
     {
@@ -25,6 +32,12 @@ public sealed class MotorInferenciaForward : IMotorInferencia
             {
                 if (!regla.EsAplicable(hechos))
                     continue;
+                
+                var usados = regla switch
+                {
+                    IReglaConHechos r => r.ObtenerHechosUsados(hechos),
+                    _ => Enumerable.Empty<IHecho>()
+                };
 
                 var nuevoHecho = regla.Ejecutar(hechos);
 
@@ -41,10 +54,15 @@ public sealed class MotorInferenciaForward : IMotorInferencia
                 // Snapshot después
                 var despues = hechos.ObtenerPorId(nuevoHecho.Id);
 
-                if (antes == null ||
-                    despues.Valor.Valor > antes.Valor.Valor)
+                if (antes == null || despues.Valor.Valor > antes.Valor.Valor)
                 {
                     huboCambios = true;
+                    
+                    _explicador?.RegistrarDisparo(
+                        regla,
+                        usados,
+                        despues
+                    );
                 }
             }
 
