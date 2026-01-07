@@ -8,4 +8,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Explanation\" />
+      <Folder Include="Inference\" />
+    </ItemGroup>
+
 </Project>
