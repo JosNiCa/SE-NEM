@@ -6,4 +6,6 @@ public interface IBaseHechos
     IEnumerable<IHecho> ObtenerPorTipo(string tipo);
     IHecho ObtenerPorId(string id);
     bool Contiene(string id);
+    
+    IReadOnlyCollection<IHecho> Todos();
 }
