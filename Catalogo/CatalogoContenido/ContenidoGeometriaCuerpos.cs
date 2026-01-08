@@ -14,12 +14,12 @@ internal static partial class ContenidosCatalogo
                     "Cilindro y cono: características y desarrollos planos",
                     new[]
                     {
-                        new IndicadorDef("IND-GEOC-6-1-1", "Identifica bases"),
-                        new IndicadorDef("IND-GEOC-6-1-2", "Identifica generatriz"),
-                        new IndicadorDef("IND-GEOC-6-1-3", "Identifica altura"),
-                        new IndicadorDef("IND-GEOC-6-1-4", "Reconoce diferencias cilindro vs cono"),
-                        new IndicadorDef("IND-GEOC-6-1-5", "Propone desarrollos planos funcionales"),
-                        new IndicadorDef("IND-GEOC-6-1-6", "Verifica construcción física o mental")
+                        new IndicadorDef("IND-GEOC-6-1-1", "Identifica bases", true),
+                        new IndicadorDef("IND-GEOC-6-1-2", "Identifica generatriz", true),
+                        new IndicadorDef("IND-GEOC-6-1-3", "Identifica altura", true),
+                        new IndicadorDef("IND-GEOC-6-1-4", "Reconoce diferencias cilindro vs cono", true),
+                        new IndicadorDef("IND-GEOC-6-1-5", "Propone desarrollos planos funcionales", true),
+                        new IndicadorDef("IND-GEOC-6-1-6", "Verifica construcción física o mental", false)
                     }
                 )
             }

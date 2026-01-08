@@ -14,9 +14,9 @@ internal static partial class ContenidosCatalogo
                     "Clasificación de eventos",
                     new[]
                     {
-                        new IndicadorDef("IND-PROB-6-1-1", "Clasifica eventos como seguro, probable o imposible"),
-                        new IndicadorDef("IND-PROB-6-1-2", "Justifica clasificación"),
-                        new IndicadorDef("IND-PROB-6-1-3", "Aplica a situaciones reales")
+                        new IndicadorDef("IND-PROB-6-1-1", "Clasifica eventos como seguro, probable o imposible", true),
+                        new IndicadorDef("IND-PROB-6-1-2", "Justifica clasificación", false),
+                        new IndicadorDef("IND-PROB-6-1-3", "Aplica a situaciones reales", true)
                     }
                 ),
                 new AepDef(
@@ -24,10 +24,10 @@ internal static partial class ContenidosCatalogo
                     "Resultados posibles, tablas y árboles",
                     new[]
                     {
-                        new IndicadorDef("IND-PROB-6-2-1", "Determina resultados posibles"),
-                        new IndicadorDef("IND-PROB-6-2-2", "Construye tabla de doble entrada"),
-                        new IndicadorDef("IND-PROB-6-2-3", "Construye diagrama de árbol"),
-                        new IndicadorDef("IND-PROB-6-2-4", "Interpreta la representación")
+                        new IndicadorDef("IND-PROB-6-2-1", "Determina resultados posibles", true),
+                        new IndicadorDef("IND-PROB-6-2-2", "Construye tabla de doble entrada", true),
+                        new IndicadorDef("IND-PROB-6-2-3", "Construye diagrama de árbol", true),
+                        new IndicadorDef("IND-PROB-6-2-4", "Interpreta la representación", true)
                     }
                 )
             }

@@ -2,7 +2,8 @@ namespace SE_NEM.Catalogo;
 
 public sealed record IndicadorDef(
     string Id,
-    string Descripcion
+    string Descripcion,
+    bool EsNuclear
 );
 
 public sealed record AepDef(

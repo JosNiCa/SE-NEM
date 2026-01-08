@@ -14,9 +14,9 @@ internal static partial class ContenidosCatalogo
                     "Construcción de polígonos regulares",
                     new[]
                     {
-                        new IndicadorDef("IND-GEOF-6-1-1", "Construye polígonos regulares"),
-                        new IndicadorDef("IND-GEOF-6-1-2", "Mantiene igualdad de lados y ángulos"),
-                        new IndicadorDef("IND-GEOF-6-1-3", "Explica procedimiento")
+                        new IndicadorDef("IND-GEOF-6-1-1", "Construye polígonos regulares", true),
+                        new IndicadorDef("IND-GEOF-6-1-2", "Mantiene igualdad de lados y ángulos", true),
+                        new IndicadorDef("IND-GEOF-6-1-3", "Explica procedimiento", false)
                     }
                 )
             }

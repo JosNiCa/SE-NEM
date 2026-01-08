@@ -14,10 +14,10 @@ internal static partial class ContenidosCatalogo
                     "División de decimales entre naturales",
                     new[]
                     {
-                        new IndicadorDef("IND-MD-6-1-1", "Posiciona correctamente el punto decimal"),
-                        new IndicadorDef("IND-MD-6-1-2", "Resuelve divisiones decimales"),
-                        new IndicadorDef("IND-MD-6-1-3", "Interpreta el resultado en contexto"),
-                        new IndicadorDef("IND-MD-6-1-4", "Puede verificar por multiplicación inversa")
+                        new IndicadorDef("IND-MD-6-1-1", "Posiciona correctamente el punto decimal", true),
+                        new IndicadorDef("IND-MD-6-1-2", "Resuelve divisiones decimales", true),
+                        new IndicadorDef("IND-MD-6-1-3", "Interpreta el resultado en contexto", true),
+                        new IndicadorDef("IND-MD-6-1-4", "Puede verificar por multiplicación inversa", false)
                     }
                 ),
                 new AepDef(
@@ -25,10 +25,10 @@ internal static partial class ContenidosCatalogo
                     "División de fracciones entre naturales",
                     new[]
                     {
-                        new IndicadorDef("IND-MD-6-2-1", "Representa la división fraccionaria como fracción ÷ natural"),
-                        new IndicadorDef("IND-MD-6-2-2", "Aplica transformación equivalente"),
-                        new IndicadorDef("IND-MD-6-2-3", "Resuelve ejercicios"),
-                        new IndicadorDef("IND-MD-6-2-4", "Aplica en problemas reales")
+                        new IndicadorDef("IND-MD-6-2-1", "Representa la división fraccionaria como fracción ÷ natural", true),
+                        new IndicadorDef("IND-MD-6-2-2", "Aplica transformación equivalente", true),
+                        new IndicadorDef("IND-MD-6-2-3", "Resuelve ejercicios", true),
+                        new IndicadorDef("IND-MD-6-2-4", "Aplica en problemas reales", true)
                     }
                 )
             }

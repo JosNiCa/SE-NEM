@@ -14,11 +14,11 @@ internal static partial class ContenidosCatalogo
                     "Tablas, gráficas de barras y circulares",
                     new[]
                     {
-                        new IndicadorDef("IND-DAT-6-1-1", "Lee tablas"),
-                        new IndicadorDef("IND-DAT-6-1-2", "Interpreta barras"),
-                        new IndicadorDef("IND-DAT-6-1-3", "Interpreta gráficas circulares"),
-                        new IndicadorDef("IND-DAT-6-1-4", "Construye gráficas de barras"),
-                        new IndicadorDef("IND-DAT-6-1-5", "Responde preguntas sobre datos")
+                        new IndicadorDef("IND-DAT-6-1-1", "Lee tablas", true),
+                        new IndicadorDef("IND-DAT-6-1-2", "Interpreta barras", true),
+                        new IndicadorDef("IND-DAT-6-1-3", "Interpreta gráficas circulares", true),
+                        new IndicadorDef("IND-DAT-6-1-4", "Construye gráficas de barras", true),
+                        new IndicadorDef("IND-DAT-6-1-5", "Responde preguntas sobre datos", true)
                     }
                 ),
                 new AepDef(
@@ -26,10 +26,10 @@ internal static partial class ContenidosCatalogo
                     "Moda, media y rango",
                     new[]
                     {
-                        new IndicadorDef("IND-DAT-6-2-1", "Obtiene moda"),
-                        new IndicadorDef("IND-DAT-6-2-2", "Calcula media aritmética"),
-                        new IndicadorDef("IND-DAT-6-2-3", "Calcula rango"),
-                        new IndicadorDef("IND-DAT-6-2-4", "Aplica medidas en problemas")
+                        new IndicadorDef("IND-DAT-6-2-1", "Obtiene moda", true),
+                        new IndicadorDef("IND-DAT-6-2-2", "Calcula media aritmética", true),
+                        new IndicadorDef("IND-DAT-6-2-3", "Calcula rango", true),
+                        new IndicadorDef("IND-DAT-6-2-4", "Aplica medidas en problemas", true)
                     }
                 )
             }
