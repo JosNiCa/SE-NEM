@@ -15,7 +15,7 @@ public sealed class ReglaIndicadoresANivelAep : ReglaDifusaBase
     )
         : base(id, $"Inferir AEP {aepId} desde indicadores")
     {
-        _aepId = aepId;
+        _aepId = NormalizarAepId(aepId);
         _indicadoresNucleares = indicadoresNucleares.ToList().AsReadOnly();
     }
 
@@ -37,10 +37,23 @@ public sealed class ReglaIndicadoresANivelAep : ReglaDifusaBase
         var valor = ValorDifuso.DesdeValor(valorDifuso);
 
         return new HechoAEP(
-            id: $"AEP-{_aepId}",
+            id: _aepId,
             aepId: _aepId,
             indicadoresOrigen: _indicadoresNucleares,
             valor: valor
         );
+    }
+    
+    private static string NormalizarAepId(string aepId)
+    {
+        if (string.IsNullOrWhiteSpace(aepId))
+            return aepId;
+
+        // Quita duplicados tipo AEP-AEP-SR-6-1 → AEP-SR-6-1 (repetidas veces si aplica)
+        const string prefijo = "AEP-";
+        while (aepId.StartsWith(prefijo + prefijo, StringComparison.OrdinalIgnoreCase))
+            aepId = prefijo + aepId.Substring((prefijo + prefijo).Length);
+
+        return aepId;
     }
 }

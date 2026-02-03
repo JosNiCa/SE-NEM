@@ -32,5 +32,15 @@ public sealed class BaseHechosDifusa : IBaseHechos
         // Combinación difusa
         var combinado = HechoCombiner.Combinar(existente, hecho);
         _hechos[hecho.Id] = combinado;
+    }   
+    
+    public bool TryObtenerPorId(string id, out IHecho hecho)
+    {
+        return _hechos.TryGetValue(id, out hecho);
+    }
+
+    public IEnumerable<IHecho> ObtenerTodos()
+    {
+        return _hechos.Values;
     }
 }

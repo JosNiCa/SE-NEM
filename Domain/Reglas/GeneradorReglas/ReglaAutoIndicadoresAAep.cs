@@ -1,3 +1,4 @@
+// Domain/Reglas/GeneradorReglas/ReglaAutoIndicadoresAAep.cs
 using SE_NEM.Catalogo;
 using SE_NEM.domain.difuso;
 using SE_NEM.domain.hechos;
@@ -18,15 +19,12 @@ public sealed class ReglaAutoIndicadoresAAep : ReglaDifusaBase, IReglaConHechos
     )
         : base(reglaId, $"Inferir {aepId} desde indicadores")
     {
-        _aepId = aepId;
+        _aepId = NormalizarAepId(aepId);
         _indicadores = indicadores.ToList().AsReadOnly();
     }
 
     public override bool EsAplicable(IBaseHechos hechos)
-    {
-        // Todos los indicadores del AEP deben existir como hechos
-        return _indicadores.All(i => hechos.Contiene(i.Id));
-    }
+        => _indicadores.All(i => hechos.Contiene(i.Id));
 
     public override IHecho Ejecutar(IBaseHechos hechos)
     {
@@ -48,39 +46,42 @@ public sealed class ReglaAutoIndicadoresAAep : ReglaDifusaBase, IReglaConHechos
             .Select(x => x.Hecho)
             .ToList();
 
-        double valorNuclear;
-        double valorComplementario;
+        double valorNuclear = nucleares.Any()
+            ? nucleares.Min(h => h.Valor.Valor)
+            : hechosIndicadores.Min(h => h.Hecho.Valor.Valor);
 
-        // --- Regla base ---
-        if (nucleares.Any())
-        {
-            valorNuclear = nucleares.Min(h => h.Valor.Valor);
-        }
-        else
-        {
-            // Caso raro: AEP sin nucleares
-            valorNuclear = hechosIndicadores.Min(h => h.Hecho.Valor.Valor);
-        }
-
-        if (complementarios.Any())
-        {
-            valorComplementario = complementarios.Max(h => h.Valor.Valor);
-        }
-        else
-        {
-            valorComplementario = valorNuclear;
-        }
+        double valorComplementario = complementarios.Any()
+            ? complementarios.Max(h => h.Valor.Valor)
+            : valorNuclear;
 
         var valorFinal = Math.Min(valorNuclear, valorComplementario);
 
         return new HechoAEP(
-            id: $"AEP-{_aepId}",
-            aepId: _aepId,
-            indicadoresOrigen: _indicadores.Select(i => i.Id),
+            id: _aepId,                 // <<-- antes: $"AEP-{_aepId}"
+            aepId: _aepId,              // <<-- consistente
+            indicadoresOrigen: _indicadores.Select(i => i.Id).ToList(),
             valor: ValorDifuso.DesdeValor(valorFinal)
         );
     }
 
     public IEnumerable<IHecho> ObtenerHechosUsados(IBaseHechos hechos)
-        => _indicadores.Select(i =>hechos.ObtenerPorId(i.Id));
+        => _indicadores.Select(i => hechos.ObtenerPorId(i.Id));
+
+    private static string NormalizarAepId(string aepId)
+    {
+        if (string.IsNullOrWhiteSpace(aepId))
+            return aepId;
+
+        const string prefijo = "AEP-";
+
+        // colapsa repeticiones: AEP-AEP-SR-6-1 -> AEP-SR-6-1
+        while (aepId.StartsWith(prefijo + prefijo, StringComparison.OrdinalIgnoreCase))
+            aepId = prefijo + aepId[(prefijo + prefijo).Length..];
+
+        // asegura 1 prefijo
+        if (!aepId.StartsWith(prefijo, StringComparison.OrdinalIgnoreCase))
+            aepId = prefijo + aepId;
+
+        return aepId;
+    }
 }

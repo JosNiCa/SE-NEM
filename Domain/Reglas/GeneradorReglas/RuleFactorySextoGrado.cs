@@ -34,8 +34,8 @@ public sealed class RuleFactorySextoGrado : IRuleFactory
     
     private IRegla CrearReglaContenido(ContenidoDef contenido)
     {
-        return new ReglaAutoAepAContenido(
-            reglaId: $"R-AEP-CT-{contenido.Id}",
+        return new ReglaAepsANivelContenido(
+            id: $"R-AEP-CT-{contenido.Id}",
             contenidoId: contenido.Id,
             aepIds: contenido.Aeps.Select(a => a.Id)
         );

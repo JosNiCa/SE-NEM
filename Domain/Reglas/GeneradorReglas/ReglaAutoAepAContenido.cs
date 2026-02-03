@@ -1,43 +1,49 @@
+// Domain/Reglas/GeneradorReglas/ReglaAutoAepAContenido.cs
 using SE_NEM.domain.difuso;
 using SE_NEM.domain.hechos;
 using SE_NEM.domain.reglas;
-using SE_NEM.Explanation;
 
-namespace SE_NEM.Domain.Reglas.GeneradorReglas;
+namespace SE_NEM.Domain.Reglas;
 
-public sealed class ReglaAutoAepAContenido : ReglaDifusaBase, IReglaConHechos
+public sealed class ReglaAepsANivelContenido : ReglaDifusaBase
 {
     private readonly string _contenidoId;
     private readonly IReadOnlyList<string> _aepIds;
+    private readonly int _minimoAepsPresentes;
 
-    public ReglaAutoAepAContenido(
-        string reglaId,
+    public ReglaAepsANivelContenido(
+        string id,
         string contenidoId,
-        IEnumerable<string> aepIds
-    )
-        : base(reglaId, $"Inferir contenido {contenidoId}")
+        IEnumerable<string> aepIds,
+        int minimoAepsPresentes = 1)
+        : base(id, $"Inferir Contenido {contenidoId} desde AEPs")
     {
         _contenidoId = contenidoId;
         _aepIds = aepIds.ToList().AsReadOnly();
+        _minimoAepsPresentes = Math.Max(1, minimoAepsPresentes);
     }
 
     public override bool EsAplicable(IBaseHechos hechos)
-        => _aepIds.All(hechos.Contiene);
+    {
+        int presentes = _aepIds.Count(hechos.Contiene);
+        return presentes >= _minimoAepsPresentes;
+    }
 
     public override IHecho Ejecutar(IBaseHechos hechos)
     {
-        var aeps = _aepIds.Select(hechos.ObtenerPorId).ToList();
+        var aepsPresentes = _aepIds
+            .Where(hechos.Contiene)
+            .Select(aepId => (HechoAEP)hechos.ObtenerPorId(aepId))
+            .ToList();
 
-        var valorDifuso = aeps.Min(h => h.Valor.Valor);
+        // Agregación difusa: min sobre los AEP presentes
+        var valor = ValorDifuso.DesdeValor(aepsPresentes.Min(a => a.Valor.Valor));
 
         return new HechoContenido(
-            id: $"CT-{_contenidoId}",
+            id: _contenidoId,
             contenidoId: _contenidoId,
-            aepsOrigen: _aepIds,
-            valor: ValorDifuso.DesdeValor(valorDifuso)
+            aepsOrigen: aepsPresentes.Select(a => a.Id).ToList(),
+            valor: valor
         );
     }
-
-    public IEnumerable<IHecho> ObtenerHechosUsados(IBaseHechos hechos)
-        => _aepIds.Select(hechos.ObtenerPorId);
 }
